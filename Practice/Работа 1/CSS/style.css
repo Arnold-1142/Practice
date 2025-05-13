@@ -1,0 +1,69 @@
+body{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    background-color: #1D7E2E;
+}
+
+.content{
+    margin: 0;
+    width: 100%;
+}
+
+.entrance-block{
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 30vh;
+    background-color: rgb(153, 223, 180);
+    border-radius: 15px;
+    padding: 40px;
+    text-align: center;
+}
+
+.entrance{
+    width: 50%;
+    border-radius: 10px;
+    background-color: #1D7E2E;
+    padding: 5px;
+    margin-top: 20px;
+}
+
+.create-an-account{
+    width: 70%;
+    border-radius: 10px;
+    background-color: #979797b2;
+    padding: 2px;
+    margin-top: 23px;
+    
+}
+
+
+
+.entrance-block h2{
+    font-size: 37px;
+    margin: 25px;
+}
+
+.entrance-block label{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.entrance-block input{
+    width: 90%;
+    margin-top: 5px;
+    padding: 6px;
+    border: 0;
+    margin-bottom: 15px;
+
+}
+
+.entrance-block button{ 
+    font-size: 18px;
+    font-weight: 500;
+    border: 0;
+    margin-bottom: 5px;
+}
+
+
+
