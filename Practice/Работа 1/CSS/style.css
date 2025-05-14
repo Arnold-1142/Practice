@@ -67,3 +67,19 @@ body{
 
 
 
+
+
+
+.regist {
+        width: 50%;
+    margin: 0 auto;
+    margin-top: 30vh;
+    background-color: rgb(153, 223, 180);
+    border-radius: 15px;
+    padding: 40px;
+    text-align: center;
+
+}
+
+
+

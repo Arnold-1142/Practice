@@ -15,4 +15,17 @@ function loadPageAuth(){
     }
 }
 
+oadPageAuth();
+function loadPageAuth(){
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "/modules/registration.html");
+    xhr.send();
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == 4){
+            CONTENT.innerHTML = xhr.responseText
+            onLoadPageAuth()
+        }
+    }
+}
+
 
