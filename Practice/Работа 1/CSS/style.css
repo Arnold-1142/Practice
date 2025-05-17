@@ -10,6 +10,10 @@ body{
     width: 100%;
 }
 
+
+
+
+
 .entrance-block{
     width: 50%;
     margin: 0 auto;
@@ -69,7 +73,6 @@ body{
 
 
 
-
 .regist {
         width: 50%;
     margin: 0 auto;
@@ -78,8 +81,37 @@ body{
     border-radius: 15px;
     padding: 40px;
     text-align: center;
-
 }
+
+
+.image{
+    font-size: 18px;
+    font-weight: 500; 
+    border: 0;
+    margin-bottom: 5px;
+}
+
+.btn-4{
+    font-size: 15px;
+}
+
+.body-regist input{
+    width: 100%;
+    margin-top: 6px;
+    padding: 6px;
+    border: 0;
+    margin-bottom: 15px;
+}
+
+.btn-4{
+    width: 50%;
+    border-radius: 10px;
+    background-color: #1D7E2E;
+    padding: 5px;
+    margin-top: 20px;
+}
+
+
 
 
 
