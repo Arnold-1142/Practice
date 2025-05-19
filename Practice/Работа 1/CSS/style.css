@@ -22,6 +22,14 @@ body{
     border-radius: 15px;
     padding: 40px;
     text-align: center;
+
+}
+
+.entrance-block img{
+    border-radius: 20px;
+    margin-top: -116px;
+    margin-left: 3px;
+    width: 150px;
 }
 
 .entrance{
@@ -43,14 +51,16 @@ body{
 
 
 
-.entrance-block h2{
-    font-size: 37px;
-    margin: 25px;
+.entrance-block h3{
+    font-size: 22px;
+    margin: 9px;
 }
+
 
 .entrance-block label{
     font-size: 20px;
     font-weight: 500;
+    
 }
 
 .entrance-block input{
@@ -60,6 +70,7 @@ body{
     border: 0;
     margin-bottom: 15px;
 
+
 }
 
 .entrance-block button{ 
@@ -68,6 +79,7 @@ body{
     border: 0;
     margin-bottom: 5px;
 }
+
 
 
 
@@ -112,6 +124,41 @@ body{
 }
 
 
+.regist{
+    font-size: 20px;
+    font-weight: 500;
+}
 
 
+.chats{
+    margin: 3px;
+    color: #050505f1;
+    padding: 2px;
+
+}
+
+
+
+.chat-img-1{
+    border-radius: 1000px;
+    width: 60px;
+   
+}
+
+.windows{
+    margin: 0;
+    padding: 7px;
+    background-color: #1D7E2E;
+}
+
+.chats{
+    
+}
+
+.chat{
+    background-color: #25D366;
+    height: 65px;
+    display: flex;
+    justify-content: space-between;
+}
 
