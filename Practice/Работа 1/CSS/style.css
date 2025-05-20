@@ -12,7 +12,7 @@ body{
 
 
 
-
+/* ВХОД */
 
 .entrance-block{
     width: 50%;
@@ -83,7 +83,7 @@ body{
 
 
 
-
+/* РЕГИСТРАЦИЯ */
 
 .regist {
         width: 50%;
@@ -144,8 +144,6 @@ body{
 
 
 
-
-
 .chats{
     padding: 2px;
     
@@ -165,7 +163,6 @@ body{
     
 }
 
-
 .chat{
     background-color: #25D366;
     height: 65px;
@@ -179,7 +176,6 @@ body{
     border-radius: 100%;
     margin-top: 5px;
     
-
 }
 
 .table {
