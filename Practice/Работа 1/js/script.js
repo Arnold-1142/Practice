@@ -15,7 +15,7 @@ function _get(params, callback) {
 }
 
 function _post (params, callback) {
-    var HTTP_REQUEST = new XMLHttpRequest();
+    let HTTP_REQUEST = new XMLHttpRequest();
     HTTP_REQUEST.open('POST', `${params.url}`);
     HTTP_REQUEST.send(params.data);
     HTTP_REQUEST.onreadystatechange = function() {
@@ -24,6 +24,98 @@ function _post (params, callback) {
         }
     }
 }
+
+
+_post({url: '/modules/registration.html'}, function(responseText){
+    CONTENT.innerHTML=responseText
+    onloadPageChat()
+    onLoadPageAuth
+    onLoadPageAuth()
+})
+
+
+function onloadPageChat() {
+    document.querySelector('.btn_4').addEventListener('click', function() {
+        let FormData = new FormData();
+        fdata.append('fam', document.querySelector('input[name="fam"]').value)
+        fdata.append('name', document.querySelector('input[name="name"]').value)
+        fdata.append('otch', document.querySelector('input[name="otch"]').value)
+        fdata.append('email', document.querySelector('input[name="email"]').value)
+        fdata.append('pass', document.querySelector('input[name="pass"]').value)
+
+        let xhr = new XMLHttpRequest();
+        fdata.append('token',TOKEN)
+        xhr.open('POST', `${HOST}/user/`)
+        xhr.send(fdata)
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    LoadPageChat()
+                }
+                if (xhr.status == 422) {
+                    let response = JSON.parse(xhr.responseText)
+                    alert(response.message)
+                }
+            }
+        }
+
+    })
+}
+
+function LoadPageChat () {
+    _get ({url: '/modules/chat.html'}, function(responseText) {
+        CONTENT.innerHTML = responseText
+    })
+}
+
+
+function onLoadPageAuth(){
+    document.querySelector('.btn_2').addEventListener('click', function(){
+        _post({url: '/modules/entrance.html'}, function(responseText){
+            CONTENT.innerHTML=responseText
+             OnLoadPageAuth()
+        })
+    })
+}
+
+function OnLoadPageAuth(){
+    document.querySelector('.bth_auth').addEventListener('click', function() {
+        let fdata = new FormData();
+        fdata.append('email', document.querySelector('input[name="email"]').value)
+        fdata.append('pass', document.querySelector('input[name="pass"]').value)
+        
+        let xhr = new XMLHttpRequest();
+        fdata.append('token', TOKEN)
+        xhr.open('POST', `${HOST}/entrance.html/`)
+        xhr.send(fdata)
+        xhr.onreadystatechange = function() {
+            if (xhr.status == 200) {
+                LoadPageChat()
+            }
+            if (xhr.status == 401) {
+                let response = JSON.parse(xhr.responseText)
+                alert(response.message)
+            }
+        }
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
 
 LoadPageAuth()
 
@@ -47,107 +139,10 @@ function onLoadPageAuth() {
     })
 }
 
-//АВТОРИЗАЦИЯ
- _get({ url: '/modules/entrance.html' }, function (responseText) {
-    CONTENT.innerHTML = responseText;
-    _elem('.go-register').addEventListener('click', function () {
-        _load('/modules/registration.html', function (responseText) {
-            CONTENT.innerHTML = responseText;
-
-            _elem('.register').addEventListener('click', function () {
 
 
-                let rdata = new FormData()
-
-
-                rdata.append('first_name', _elem('input[name="first_name"]').value)
-                rdata.append('last_name', _elem('input[name="last_name"]').value)
-                rdata.append('email', _elem('input[name="email"]').value)
-                rdata.append('password', _elem('input[name="password"]').value)
-
-                _post({ url: `${HOST}/registration`, data: rdata }, function (responseText) {
-                    responseText = JSON.parse(responseText)
-                    console.log(responseText);
-                    if (responseText.success) {
-                        token = responseText.token
-                        console.log(token)
-                        _load('/modules/profile.html', function (responseText) {
-                            CONTENT.innerHTML = responseText
-                        })
-                    }
-
-                })
-            })
-        })
-
-    })
-
- 
+*/
 
 
 
-  _elem('.chat').addEventListener('click', function () {
-        let edata = new FormData()
-        let email = _elem('input[name="email"]').value
-        let password = _elem('input[name="password"]').value
-        edata.append('email', email)
-        edata.append('password', password)
-  _post({ url: `${HOST}/chat`, data: edata }, function (responseText) {
-            responseText = JSON.parse(responseText)
-            console.log(responseText);
-            if (responseText.success) {
-                token = responseText.token
-                console.log(token)
-  _load('/modules/profile.html', function (responseText) {
-                CONTENT.innerHTML = responseText
-
-  _elem('.btn-upload-file').addEventListener('click', function () {
-  _get({ url: `/modules/upload.html` }, function (responseText) {
-            CONTENT.innerHTML = responseText
-
-  _elem('.upload-files').addEventListener('click', function () {
-
-            })
-
-  _elem('.btn-to-disk').addEventListener('click', function () {
-  _get({ url: `/modules/profile.html` }, function (responseText) {
-            CONTENT.innerHTML = responseText
-                                })
-                            })
-                        })
-                    })
-
-                })
-            }
-            else {
-                alert("login failed")
-            }
-
-        })
-
-    })
-
-
- })
-
-
-_get({ url: `/modules/logout` }, function(responseText){
-    CONTENT.innerHTML = responseText
- })
-
-
-_post({ url: `${HOST}/upload`, data: rdata }, function (responseText){
-   responseText = JSON.parse(responseText)
-})
-
-const path = require('node: path');
-path.basename('C:\\temp\\profile.html')
-
-
-// _delete(modules/upload.html)
-
-
-_get({url:`${HOST}/disk`, data: adata}, function (responseText){
-    filesTable = JSON.parse(responseText)
-})
 
