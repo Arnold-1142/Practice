@@ -26,17 +26,20 @@ function _post (params, callback) {
 }
 
 
-_post({url: '/modules/registration.html'}, function(responseText){
+LoadPageReg()
+function LoadPageReg(){
+ _post({url: '/modules/registration.html'}, function(responseText){
     CONTENT.innerHTML=responseText
     onloadPageChat()
-    onLoadPageAuth
     onLoadPageAuth()
 })
+}
 
 
+/*Регистрация*/
 function onloadPageChat() {
-    document.querySelector('.btn_4').addEventListener('click', function() {
-        let FormData = new FormData();
+    document.querySelector('.btn-4').addEventListener('click', function() {
+        let fdata = new FormData();
         fdata.append('fam', document.querySelector('input[name="fam"]').value)
         fdata.append('name', document.querySelector('input[name="name"]').value)
         fdata.append('otch', document.querySelector('input[name="otch"]').value)
@@ -62,6 +65,7 @@ function onloadPageChat() {
     })
 }
 
+/*Чат*/
 function LoadPageChat () {
     _get ({url: '/modules/chat.html'}, function(responseText) {
         CONTENT.innerHTML = responseText
@@ -70,24 +74,27 @@ function LoadPageChat () {
 
 
 function onLoadPageAuth(){
-    document.querySelector('.btn_2').addEventListener('click', function(){
+    document.querySelector('.btn-5').addEventListener('click', function(){
         _post({url: '/modules/entrance.html'}, function(responseText){
             CONTENT.innerHTML=responseText
              OnLoadPageAuth()
+             LoadPageRegAuth()
+
         })
     })
 }
 
+/*Авторизация*/
 function OnLoadPageAuth(){
-    document.querySelector('.bth_auth').addEventListener('click', function() {
-        let fdata = new FormData();
-        fdata.append('email', document.querySelector('input[name="email"]').value)
-        fdata.append('pass', document.querySelector('input[name="pass"]').value)
+    document.querySelector('.entrance').addEventListener('click', function() {
+        let gdata = new FormData();
+        gdata.append('email', document.querySelector('input[name="email"]').value)
+        gdata.append('pass', document.querySelector('input[name="pass"]').value)
         
         let xhr = new XMLHttpRequest();
-        fdata.append('token', TOKEN)
-        xhr.open('POST', `${HOST}/entrance.html/`)
-        xhr.send(fdata)
+        gdata.append('token', TOKEN)
+        xhr.open('POST', `${HOST}/auth/`)
+        xhr.send(gdata)
         xhr.onreadystatechange = function() {
             if (xhr.status == 200) {
                 LoadPageChat()
@@ -100,48 +107,24 @@ function OnLoadPageAuth(){
     })
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-
-
-LoadPageAuth()
-
-
-function LoadPageAuth () {
-    _get ({url: '/modules/entrance.html'}, function(responseText) {
-        CONTENT.innerHTML = responseText
-    })
-}
-
-onLoadPageAuth()
-
-
-function onLoadPageAuth() {
-    document.querySelector('.entrance').addEventListener('click', function() {
-        var request_data = new FormData();
-        request_data.append('?', document.querySelector('input[name="?"]').value)
-        request_data.append('?', document.querySelector('input[name="?"]').value)
-        request_data.append('?', document.querySelector('input[name="?"]').value)
-        request_data.append('?', document.querySelector('input[name="?"]').value)
-    })
+function LoadPageRegAuth() {
+    document.querySelector('.btn-6').addEventListener('click',LoadPageReg)
 }
 
 
 
-*/
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
