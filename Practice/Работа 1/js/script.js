@@ -84,6 +84,7 @@ function onLoadPageAuth(){
     })
 }
 
+
 /*Авторизация*/
 function OnLoadPageAuth(){
     document.querySelector('.entrance').addEventListener('click', function() {

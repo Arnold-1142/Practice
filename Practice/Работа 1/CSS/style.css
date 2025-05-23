@@ -13,6 +13,8 @@ body{
 
 
 
+
+
 /* ВХОД */
 
 .entrance-block{
@@ -70,16 +72,23 @@ body{
     padding: 6px;
     border: 0;
     margin-bottom: 15px;
-
-
 }
+
 
 .entrance-block button{ 
     font-size: 18px;
     font-weight: 500;
     border: 0;
     margin-bottom: 5px;
+   
 }
+
+.btn-6{
+    background-color: #99dfb4;
+    border-radius: 5px;
+    text-decoration: underline;
+}
+
 
 
 
@@ -97,6 +106,14 @@ body{
 }
 
 
+.regist img{
+    border-radius: 20px;
+    margin-top: -116px;
+    margin-left: 3px;
+    width: 150px;
+}
+
+
 .image{
     font-size: 18px;
     font-weight: 500; 
@@ -104,9 +121,11 @@ body{
     margin-bottom: 5px;
 }
 
+
 .btn-4{
     font-size: 15px;
 }
+
 
 .body-regist input{
     width: 100%;
@@ -116,6 +135,7 @@ body{
     margin-bottom: 15px;
 }
 
+
 .btn-4{
     width: 50%;
     border-radius: 10px;
@@ -123,6 +143,7 @@ body{
     padding: 5px;
     margin-top: 20px;
 }
+
 
 .btn-5{
     width: 50%;
@@ -138,6 +159,8 @@ body{
     font-size: 20px;
     font-weight: 500;
 }
+
+
 
 
 /* ЧАТ */
@@ -160,7 +183,6 @@ body{
     border-radius: 7px;
     font-size: 14px;
 }
-
 
 
 .chats{
@@ -209,20 +231,35 @@ input .text {
     width: 800px;
 }
 
+
+
 .sms {
     width: 300px;
     height: 26px;
     margin-top: 2px;
     margin-left: 245px;
+    margin-right: 40px;
     border-radius: 20px;
     border: 0;
+    display: flex;
+    
+}
+
+
+
+.smss{
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    width: 30px;
+    display: flex;
 }
 
 .otpr-sms {
     width: 85px;
-    height: 30px;
-    margin-top: -10px;
-    margin-left: 550px;
+   height: 29px;
+    margin-top: 24px;
+    margin-left: -34px;
     transform: translateY(-22.9px);
     border-radius: 25px;
     border: 0;
@@ -231,6 +268,7 @@ input .text {
         background-color: #01d43688;
     }
 }
+
 
 .user img{
     border-radius: 70%;
