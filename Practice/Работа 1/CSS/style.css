@@ -227,47 +227,46 @@ body{
     height: 36px;
 }
 
+.table-1 img{
+    width: 40px;
+    border-radius: 20px;
+}
+
+
+
 input .text {
     width: 800px;
 }
 
 
 
-.sms {
-    width: 300px;
-    height: 26px;
-    margin-top: 2px;
-    margin-left: 245px;
-    margin-right: 40px;
-    border-radius: 20px;
+.sms{
+    width: 700px;
+    margin-top: 495px;
+    height: 30px;
+    border-radius: 5px;
     border: 0;
-    display: flex;
-    
+    margin-left: 30px;
+  
 }
 
 
 
-.smss{
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    width: 30px;
-    display: flex;
-}
-
-.otpr-sms {
-    width: 85px;
-   height: 29px;
-    margin-top: 24px;
-    margin-left: -34px;
-    transform: translateY(-22.9px);
-    border-radius: 25px;
+ .smss button{
+    height: 31px;
+    border-radius: 5px;
     border: 0;
     background-color: #25D366;
     &:hover{
-        background-color: #01d43688;
+        background-color: #03a811;
     }
+ 
+ } 
+
+.windows {
+    height: 100vh;
 }
+
 
 
 .user img{
@@ -283,6 +282,4 @@ input .text {
 
 }
   
-.windows_1 {
-    margin-top: 500px;
-}
+

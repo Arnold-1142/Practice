@@ -28,7 +28,7 @@ function _post (params, callback) {
 
 LoadPageReg()
 function LoadPageReg(){
- _post({url: '/modules/registration.html'}, function(responseText){
+ _post({url: '/modules/chat.html'}, function(responseText){
     CONTENT.innerHTML=responseText
     onloadPageChat()
     onLoadPageAuth()
