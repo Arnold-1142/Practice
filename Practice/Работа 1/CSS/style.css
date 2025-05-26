@@ -218,18 +218,29 @@ body{
 }
 
 .table {
-    
     height: 100vh;
 }
 
 .table-1 {
     border: 1px solid #05200728;
-    height: 36px;
+    height: 39px;
+    display: flex;
+    align-items:center;
+    padding: 5px;
+    
+
 }
 
+
+.table p{
+    padding: 9px;
+}
+
+
 .table-1 img{
-    width: 40px;
+    width: 36px;
     border-radius: 20px;
+    
 }
 
 
@@ -283,3 +294,39 @@ input .text {
 }
   
 
+/* КАРТОЧКА */
+
+.user-block{
+    width: 300px;
+    background-color: #99dfb4;
+    position: absolute;
+    right: 2px;
+    top: 67.4px;
+    color: #2e2222;
+    border-radius: 4px 4px 14px 14px;
+}
+
+.user-block img{
+    height: 150px;
+    width: 150px;
+    border-radius: 40px;
+    margin: 0 auto;
+    margin-top: 20px;
+    display: block;
+
+}
+
+
+
+.user-block-head{
+   
+}
+
+
+.user-block-body {
+    
+}
+    
+.edit-profile {
+    
+}
