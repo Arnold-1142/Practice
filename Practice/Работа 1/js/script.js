@@ -65,6 +65,7 @@ function onloadPageChat() {
     })
 }
 
+
 /*Чат*/
 function LoadPageChat () {
     _get ({url: '/modules/chat.html'}, function(responseText) {
@@ -83,6 +84,10 @@ function onLoadPageAuth(){
         })
     })
 }
+
+
+
+
 
 
 /*Авторизация*/
@@ -112,6 +117,40 @@ function LoadPageRegAuth() {
     document.querySelector('.btn-6').addEventListener('click',LoadPageReg)
 }
 
+
+
+
+
+
+/* Выход из чата */
+
+function onloadPageChat() {
+    document.querySelector('.logout').addEventListener('click', function() {
+        let fdata = new FormData();
+        fdata.append('fam', document.querySelector('input[name="fam"]').delete)
+        fdata.append('name', document.querySelector('input[name="name"]').delete)
+        fdata.append('otch', document.querySelector('input[name="otch"]').delete)
+        fdata.append('email', document.querySelector('input[name="email"]').delete)
+        fdata.append('pass', document.querySelector('input[name="pass"]').delete)
+
+        let xhr = new XMLHttpRequest();
+        fdata.append('token',TOKEN)
+        xhr.open('POST', `${HOST}/user/`)
+        xhr.send(fdata)
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    LoadPageChat()
+                }
+                if (xhr.status == 422) {
+                    let response = JSON.parse(xhr.responseText)
+                    alert(response.message)
+                }
+            }
+        }
+
+    })
+}
 
 
 
