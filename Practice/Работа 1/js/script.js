@@ -127,11 +127,10 @@ function LoadPageRegAuth() {
 
 
 
-
-
+/*
 function logout() {
     TOKEN = ''; 
-    LoadPageReg('registration.html'); 
+    LoadPageReg('.registration.html'); 
 }
 
 
@@ -141,6 +140,7 @@ function setupLogout() {
         logoutBtn.addEventListener('click', logout);
     }
 }
+
 
 
 setupLogout();
@@ -154,6 +154,45 @@ function setupLogout() {
         });
     }
 }
+
+*/
+
+
+
+
+function LoadPageChat() {
+    _get({ url: '/modules/chat.html' }, function(responseText) {
+        CONTENT.innerHTML = responseText;
+
+       
+        document.querySelector('.logout').addEventListener('click', function() {
+            
+            TOKEN = ''; 
+            LoadPageReg(`.registration.html`); 
+        });
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
