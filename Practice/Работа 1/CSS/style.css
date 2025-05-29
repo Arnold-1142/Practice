@@ -182,8 +182,10 @@ body{
     padding: 7px 18px;
     border-radius: 7px;
     font-size: 14px;
+     &:hover{
+        background-color: #d1e2d1;
+    }
 }
-
 
 .chats{
     padding: 2px;
@@ -227,8 +229,12 @@ body{
     display: flex;
     align-items:center;
     padding: 5px;
-    
-
+     &:hover{
+        background-color: #788178;
+         border-radius: 25px 25px 25px 25px;
+    }
+    cursor: pointer;
+   
 }
 
 
@@ -271,6 +277,7 @@ input .text {
     &:hover{
         background-color: #03a811;
     }
+    cursor: pointer;
  
  } 
 
@@ -290,7 +297,9 @@ input .text {
 
 .chats .user-1{
     margin-right: 30px;
-
+    font-style: italic;
+    font-weight: normal;
+    font-size: 21px;
 }
   
 
@@ -317,6 +326,7 @@ input .text {
     position: absolute;
     top: -12px;
     box-shadow: 0 0 10px 2px rgba(17, 17, 17, 0.5);
+    cursor: pointer;
 
 }
 
@@ -358,6 +368,7 @@ input .text {
     text-align: center;
     height: 50px;
     position: relative;
+    cursor: pointer;
 }
 
 
@@ -374,9 +385,16 @@ input .text {
      &:hover{
         background-color: #03a811;
     }
-    border-radius: 0 0 14px 0px;
+    border-radius: 0 0px 14px 0px;
 }
 
 
+
+
 /* logout */
+
+
+
+
+
 
