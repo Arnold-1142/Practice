@@ -1,0 +1,275 @@
+
+<!-- Html -->
+
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Мессенджер с регистрацией и чатом</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div id="auth-container">
+        <h2>Регистрация</h2>
+        <input type="text" id="reg-username" placeholder="Имя пользователя" />
+        <input type="password" id="reg-password" placeholder="Пароль" />
+        <button id="register-btn">Зарегистрироваться</button>
+
+        <h2>Авторизация</h2>
+        <input type="text" id="login-username" placeholder="Имя пользователя" />
+        <input type="password" id="login-password" placeholder="Пароль" />
+        <button id="login-btn">Войти</button>
+
+        <div id="auth-message"></div>
+    </div>
+
+    <div id="chat-container" style="display:none;">
+        <div id="chat-header">
+            <span id="user-display"></span>
+            <button id="logout-btn">Выйти</button>
+        </div>
+        <div id="messages"></div>
+        <input type="text" id="message-input" placeholder="Введите сообщение..." />
+        <button id="send-btn">Отправить</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+<!-- CSS -->
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    padding: 20px;
+    max-width: 500px;
+    margin: auto;
+}
+
+#auth-container, #chat-container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    background: #007bff;
+    border: none;
+    color: white;
+    border-radius: 4px;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+#messages {
+    height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #fafafa;
+    border-radius: 4px;
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 5px;
+    max-width: 70%;
+}
+
+.message.user {
+    background-color: #d1e7dd;
+    margin-left: auto;
+    text-align: right;
+}
+
+.message.other {
+    background-color: #f8d7da;
+    margin-right: auto;
+    text-align: left;
+}
+
+#chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+#auth-message {
+    color: red;
+    margin-top: 10px;
+}
+
+
+
+
+
+
+<!-- JS -->
+
+// Ключи для хранения данных в localStorage
+const USERS_KEY = 'chat_users';
+const MESSAGES_KEY = 'chat_messages';
+let currentUser  = null;
+
+// Получение пользователей из localStorage
+function getUsers() {
+    return JSON.parse(localStorage.getItem(USERS_KEY)) || {};
+}
+
+// Сохранение пользователей в localStorage
+function saveUsers(users) {
+    localStorage.setItem(USERS_KEY, JSON.stringify(users));
+}
+
+// Получение сообщений из localStorage
+function getMessages() {
+    return JSON.parse(localStorage.getItem(MESSAGES_KEY)) || [];
+}
+
+// Сохранение сообщений в localStorage
+function saveMessages(messages) {
+    localStorage.setItem(MESSAGES_KEY, JSON.stringify(messages));
+}
+
+// Показать сообщение пользователю
+function showMessage(text, type = 'error') {
+    const msgDiv = document.getElementById('auth-message');
+    msgDiv.style.color = type === 'error' ? 'red' : 'green';
+    msgDiv.textContent = text;
+}
+
+// Очистка сообщения
+function clearMessage() {
+    document.getElementById('auth-message').textContent = '';
+}
+
+// Регистрация нового пользователя
+document.getElementById('register-btn').addEventListener('click', () => {
+    clearMessage();
+    const username = document.getElementById('reg-username').value.trim();
+    const password = document.getElementById('reg-password').value;
+
+    if (!username || !password) {
+        showMessage('Введите имя пользователя и пароль');
+        return;
+    }
+
+    let users = getUsers();
+    if (users[username]) {
+        showMessage('Пользователь с таким именем уже существует');
+        return;
+    }
+
+    users[username] = { password };
+    saveUsers(users);
+    showMessage('Регистрация успешна! Теперь войдите.', 'success');
+
+    // Очистка полей
+    document.getElementById('reg-username').value = '';
+    document.getElementById('reg-password').value = '';
+});
+
+// Авторизация пользователя
+document.getElementById('login-btn').addEventListener('click', () => {
+    clearMessage();
+    const username = document.getElementById('login-username').value.trim();
+    const password = document.getElementById('login-password').value;
+
+    if (!username || !password) {
+        showMessage('Введите имя пользователя и пароль');
+        return;
+    }
+
+    let users = getUsers();
+    if (!users[username] || users[username].password !== password) {
+        showMessage('Неверное имя пользователя или пароль');
+        return;
+    }
+
+    currentUser  = username;
+    showChat();
+});
+
+// Показать чат и скрыть форму авторизации
+function showChat() {
+    document.getElementById('auth-container').style.display = 'none';
+    document.getElementById('chat-container').style.display = 'block';
+    document.getElementById('user-display').textContent = currentUser ;
+    loadMessages();
+}
+
+// Выход из аккаунта
+document.getElementById('logout-btn').addEventListener('click', () => {
+    currentUser  = null;
+    document.getElementById('auth-container').style.display = 'block';
+    document.getElementById('chat-container').style.display = 'none';
+    clearMessage();
+});
+
+// Отправка сообщения
+document.getElementById('send-btn').addEventListener('click', sendMessage);
+document.getElementById('message-input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') sendMessage();
+});
+
+function sendMessage() {
+    const input = document.getElementById('message-input');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const messages = getMessages();
+    messages.push({ user: currentUser , text, timestamp: Date.now() });
+    saveMessages(messages);
+
+    input.value = '';
+    addMessageToDOM({ user: currentUser , text });
+}
+
+// Загрузка сообщений и отображение их в чате
+function loadMessages() {
+    const messages = getMessages();
+    const container = document.getElementById('messages');
+    container.innerHTML = '';
+    messages.forEach(addMessageToDOM);
+    container.scrollTop = container.scrollHeight;
+}
+
+// Добавление сообщения в DOM
+function addMessageToDOM(message) {
+    const container = document.getElementById('messages');
+    const div = document.createElement('div');
+    div.classList.add('message', message.user === currentUser  ? 'user' : 'other');
+    div.textContent = `${message.user}: ${message.text}`;
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+}
+
+// При загрузке страницы
+window.onload = () => {
+    // Здесь можно добавить логику для проверки сессии
+};
+

@@ -217,6 +217,7 @@ body{
     border-radius: 100%;
     margin-top: 5px;
     
+    
 }
 
 .table {
@@ -285,6 +286,17 @@ input .text {
     height: 100vh;
 }
 
+.user{
+    text-align: right;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    justify-content: end;
+    &:hover{
+        background-color: #788178;
+    }
+    cursor: pointer;
+}
 
 
 .user img{
@@ -292,14 +304,17 @@ input .text {
     width: 50px;
     height: 50px;
     margin-top: 5px;
+    cursor: pointer;
     
 }
+
 
 .chats .user-1{
     margin-right: 30px;
     font-style: italic;
     font-weight: normal;
     font-size: 21px;
+    cursor: pointer;
 }
   
 
@@ -338,6 +353,8 @@ input .text {
     margin: 0 auto;
     margin-top: 20px;
     display: block;
+    
+
 
 }
 

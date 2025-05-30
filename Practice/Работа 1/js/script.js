@@ -36,7 +36,9 @@ function LoadPageReg(){
 }
 
 
+
 /*Регистрация*/
+
 function onloadPageChat() {
     document.querySelector('.btn-4').addEventListener('click', function() {
         let fdata = new FormData();
@@ -67,6 +69,7 @@ function onloadPageChat() {
 
 
 /*Чат*/
+
 function LoadPageChat () {
     _get ({url: '/modules/chat.html'}, function(responseText) {
         CONTENT.innerHTML = responseText
@@ -91,6 +94,7 @@ function onLoadPageAuth(){
 
 
 /*Авторизация*/
+
 function OnLoadPageAuth(){
     document.querySelector('.entrance').addEventListener('click', function() {
         let gdata = new FormData();
@@ -125,41 +129,6 @@ function LoadPageRegAuth() {
 
 /* Выход из чата */
 
-
-
-/*
-function logout() {
-    TOKEN = ''; 
-    LoadPageReg('.registration.html'); 
-}
-
-
-function setupLogout() {
-    const logoutBtn = document.querySelector('.logout');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', logout);
-    }
-}
-
-
-
-setupLogout();
-
-function setupLogout() {
-    const logoutBtn = document.querySelector('.logout');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function() {
-            TOKEN = '';
-           
-        });
-    }
-}
-
-*/
-
-
-
-
 function LoadPageChat() {
     _get({ url: '/modules/chat.html' }, function(responseText) {
         CONTENT.innerHTML = responseText;
@@ -170,8 +139,31 @@ function LoadPageChat() {
             TOKEN = ''; 
             LoadPageReg(`.registration.html`); 
         });
+         clearMessage();
     });
+
+    //очистка сообщения
+    function clearMessage() {
+    document.getElementById('entrance.html').textContent = '';
 }
+}
+
+
+
+
+
+/*-----*/
+
+
+
+
+
+
+
+
+
+
+
 
 
 
