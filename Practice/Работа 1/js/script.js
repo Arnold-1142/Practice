@@ -28,7 +28,7 @@ function _post (params, callback) {
 
 LoadPageReg()
 function LoadPageReg(){
- _post({url: '/modules/chat.html'}, function(responseText){
+ _post({url: '/modules/registration.html'}, function(responseText){
     CONTENT.innerHTML=responseText
     onloadPageChat()
     onLoadPageAuth()
@@ -152,8 +152,100 @@ function LoadPageChat() {
 
 
 
-/*-----*/
 
+
+
+
+
+
+// 1. В функции LoadPageChat() добавим кнопку для открытия профиля
+function LoadPageChat() {
+    _get({ url: '/modules/chat.html' }, function(responseText) {
+        CONTENT.innerHTML = responseText;
+
+        // Добавим кнопку "Профиль" в чат
+        const chatContainer = CONTENT;
+        const profileBtn = document.createElement('button');
+        profileBtn.textContent = 'Мой профиль';
+        profileBtn.className = 'btn-profile'; // класс для стилизации
+        chatContainer.appendChild(profileBtn);
+
+        // Обработчик для кнопки "Мой профиль"
+        profileBtn.addEventListener('click', showUserCard);
+
+        // Обработчик выхода
+        document.querySelector('.logout').addEventListener('click', function() {
+            TOKEN = ''; 
+            LoadPageReg(); 
+        });
+        
+        // Очистка сообщений
+        clearMessage();
+    });
+
+    function clearMessage() {
+        document.getElementById('entrance.html').textContent = '';
+    }
+}
+
+// 2. Функция для отображения карточки пользователя
+function showUserCard() {
+    _get({ url: '/modules/card.html' }, function(responseText) {
+        CONTENT.innerHTML = responseText;
+
+        // Предположим, что у вас есть текущий userId (например, из токена или глобальной переменной)
+        const userId = '123'; // Замените на актуальный ID
+
+        // Загрузим текущие данные пользователя
+        _get({ url: `${HOST}/user/${userId}` }, function(userResponse) {
+            const userData = JSON.parse(userResponse);
+            document.querySelector('input[name="fam"]').value = userData.fam;
+            document.querySelector('input[name="name"]').value = userData.name;
+            document.querySelector('input[name="otch"]').value = userData.otch;
+            document.querySelector('input[name="email"]').value = userData.email;
+            // добавьте другие поля по необходимости
+        });
+
+        // Обработчик "Сохранить"
+        document.querySelector('.save-profile').addEventListener('click', function() {
+            const formData = new FormData(document.getElementById('userForm'));
+            formData.append('token', TOKEN);
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', `${HOST}/user/${userId}`);
+            xhr.send(formData);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        alert('Профиль обновлен');
+                        showUserCard(); // перезагрузить карточку с новыми данными
+                    } else {
+                        alert('Ошибка при сохранении профиля');
+                    }
+                }
+            };
+        });
+
+        // Обработчик "Закрыть"
+        document.querySelector('.close-card').addEventListener('click', function() {
+            LoadPageChat(); // возвращаемся к чату
+        });
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*---------*/
 
 
 
