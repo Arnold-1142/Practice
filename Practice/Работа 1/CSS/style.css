@@ -11,6 +11,9 @@ body{
     width: 100%;
 }
 
+.hidden {
+    display: none;
+}
 
 
 
@@ -18,7 +21,7 @@ body{
 
 /* ВХОД */
 
-.entrance-block{
+.btn-auth-block{
     width: 50%;
     margin: 0 auto;
     margin-top: 30vh;
@@ -29,14 +32,14 @@ body{
 
 }
 
-.entrance-block img{
+.btn-auth-block img{
     border-radius: 20px;
     margin-top: -116px;
     margin-left: 3px;
     width: 150px;
 }
 
-.entrance{
+.btn-auth{
     width: 50%;
     border-radius: 10px;
     background-color: #1D7E2E;
@@ -55,19 +58,19 @@ body{
 
 
 
-.entrance-block h3{
+.btn-auth-block h3{
     font-size: 22px;
     margin: 9px;
 }
 
 
-.entrance-block label{
+.btn-auth-block label{
     font-size: 20px;
     font-weight: 500;
     
 }
 
-.entrance-block input{
+.btn-auth-block input{
     width: 90%;
     margin-top: 5px;
     padding: 6px;
@@ -76,7 +79,7 @@ body{
 }
 
 
-.entrance-block button{ 
+.btn-auth-block button{ 
     font-size: 18px;
     font-weight: 500;
     border: 0;
@@ -84,7 +87,7 @@ body{
    
 }
 
-.btn-6{
+.btn-go-register{
     background-color: #99dfb4;
     border-radius: 5px;
     text-decoration: underline;
@@ -123,7 +126,7 @@ body{
 }
 
 
-.btn-4{
+.btn-register{
     font-size: 15px;
 }
 
@@ -137,7 +140,7 @@ body{
 }
 
 
-.btn-4{
+.btn-register{
     width: 50%;
     border-radius: 10px;
     background-color: #1D7E2E;
@@ -146,7 +149,7 @@ body{
 }
 
 
-.btn-5{
+.btn-go-auth{
     width: 50%;
     border-radius: 10px;
     background-color: #1D7E2E;

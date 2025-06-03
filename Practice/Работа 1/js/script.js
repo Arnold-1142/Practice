@@ -26,21 +26,20 @@ function _post (params, callback) {
 }
 
 
-LoadPageReg()
+LoadPageAuth()
+
+
+
+//#region Регистрация
 function LoadPageReg(){
- _post({url: '/modules/registration.html'}, function(responseText){
-    CONTENT.innerHTML=responseText
-    onloadPageChat()
-    onLoadPageAuth()
-})
+    _post({url: '/modules/registration.html'}, function(responseText){
+        CONTENT.innerHTML=responseText
+        onloadPageRegister()
+    })
 }
 
-
-
-/*Регистрация*/
-
-function onloadPageChat() {
-    document.querySelector('.btn-4').addEventListener('click', function() {
+function onloadPageRegister() {
+    document.querySelector('.btn-register').addEventListener('click', function() {
         let fdata = new FormData();
         fdata.append('fam', document.querySelector('input[name="fam"]').value)
         fdata.append('name', document.querySelector('input[name="name"]').value)
@@ -63,40 +62,24 @@ function onloadPageChat() {
                 }
             }
         }
+    })
 
+    document.querySelector('.btn-go-auth').addEventListener('click', LoadPageAuth)
+}
+
+//#endregion
+
+//#region  Авторизация*/
+function LoadPageAuth() {
+    _post({url: '/modules/entrance.html'}, function(responseText){
+        CONTENT.innerHTML=responseText
+        OnLoadPageAuth()
     })
 }
 
-
-/*Чат*/
-
-function LoadPageChat () {
-    _get ({url: '/modules/chat.html'}, function(responseText) {
-        CONTENT.innerHTML = responseText
-    })
-}
-
-
-function onLoadPageAuth(){
-    document.querySelector('.btn-5').addEventListener('click', function(){
-        _post({url: '/modules/entrance.html'}, function(responseText){
-            CONTENT.innerHTML=responseText
-             OnLoadPageAuth()
-             LoadPageRegAuth()
-
-        })
-    })
-}
-
-
-
-
-
-
-/*Авторизация*/
 
 function OnLoadPageAuth(){
-    document.querySelector('.entrance').addEventListener('click', function() {
+    document.querySelector('.btn-auth').addEventListener('click', function() {
         let gdata = new FormData();
         gdata.append('email', document.querySelector('input[name="email"]').value)
         gdata.append('pass', document.querySelector('input[name="pass"]').value)
@@ -107,7 +90,9 @@ function OnLoadPageAuth(){
         xhr.send(gdata)
         xhr.onreadystatechange = function() {
             if (xhr.status == 200) {
-                LoadPageChat()
+                if (xhr.readyState == 4) {
+                    LoadPageChat(JSON.parse(xhr.responseText).Data)
+                }
             }
             if (xhr.status == 401) {
                 let response = JSON.parse(xhr.responseText)
@@ -115,11 +100,153 @@ function OnLoadPageAuth(){
             }
         }
     })
+
+    document.querySelector('.btn-go-register').addEventListener('click', LoadPageReg)
 }
 
-function LoadPageRegAuth() {
-    document.querySelector('.btn-6').addEventListener('click',LoadPageReg)
+//#endregion
+
+//#region  Чат*/
+
+function LoadPageChat (userdata) {   
+    _get ({url: '/modules/chat.html'}, function(responseText) {
+        CONTENT.innerHTML = responseText
+        onLoadPageChat()
+    })
 }
+
+
+function onLoadPageChat(){
+    document.querySelector('.user').addEventListener('click', function() {
+        document.querySelector('.user-block').classList.toggle('hidden')
+    })
+
+
+
+
+
+
+
+    
+}
+    
+//#endregion
+
+
+
+
+
+
+
+/* 
+
+
+// Функция для получения списка чатов пользователя
+function fetchChats() {
+    _get({ url: `${HOST}/chats/` }, function(responseText) {
+        try {
+            const chats = JSON.parse(responseText);
+            displayChats(chats);
+            // Запускаем отслеживание новых сообщений
+            trackChatMessages(chats);
+        } catch (e) {
+            console.error('Ошибка парсинга чатов:', e);
+        }
+    });
+}
+
+// Функция для отображения списка чатов
+function displayChats(chats) {
+    const chatContainer = document.querySelector('.chat-list'); // предполагается, что есть контейнер для чатов
+    if (!chatContainer) return;
+
+    chatContainer.innerHTML = ''; // очищаем текущий список
+
+    chats.forEach(chat => {
+        const chatElement = document.createElement('div');
+        chatElement.className = 'chat-item';
+        chatElement.dataset.chatId = chat.chat_id;
+
+        // Формируем содержимое элемента
+        chatElement.innerHTML = `
+            <img src="${chat.companion_photo_link || '/files/photos/default_men.png'}" alt="Фото" class="chat-photo" />
+            <div class="chat-info">
+                <div class="chat-name">${chat.chat_name}</div>
+                <div class="chat-last-message">Последнее сообщение: ${chat.chat_last_message}</div>
+                <div class="chat-companion">${chat.companion_fam} ${chat.companion_name} ${chat.companion_otch}</div>
+            </div>
+        `;
+        // Можно добавить обработчик клика по чату
+        chatElement.addEventListener('click', () => {
+            openChat(chat.chat_id);
+        });
+        chatContainer.appendChild(chatElement);
+    });
+}
+
+// Функция для открытия конкретного чата (пример)
+function openChat(chatId) {
+    console.log('Открыть чат:', chatId);
+    // Реализуйте открытие выбранного чата
+}
+
+// Объект для хранения последнего времени сообщений по чатам
+const lastMessageTimes = {};
+
+// Функция для отслеживания новых сообщений в чатах
+function trackChatMessages(chats) {
+    // Обновляем lastMessageTimes при первом получении
+    chats.forEach(chat => {
+        lastMessageTimes[chat.chat_id] = new Date(chat.chat_last_message).getTime();
+    });
+
+    // Запускаем периодический опрос каждые 10 секунд (или другой интервал)
+    setInterval(() => {
+        _get({ url: `${HOST}/chats/` }, function(responseText) {
+            try {
+                const updatedChats = JSON.parse(responseText);
+                updatedChats.forEach(chat => {
+                    const lastMsgTime = new Date(chat.chat_last_message).getTime();
+                    if (lastMsgTime > lastMessageTimes[chat.chat_id]) {
+                        // Есть новое сообщение
+                        lastMessageTimes[chat.chat_id] = lastMsgTime;
+                        // Обновляем отображение конкретного чата или показываем уведомление
+                        updateChatItem(chat);
+                    }
+                });
+            } catch (e) {
+                console.error('Ошибка при отслеживании сообщений:', e);
+            }
+        });
+    }, 10000); 
+}
+
+// Обновление конкретного элемента чата при новом сообщении
+function updateChatItem(chat) {
+    const chatItems = document.querySelectorAll('.chat-item');
+    chatItems.forEach(item => {
+        if (item.dataset.chatId === chat.chat_id) {
+            // Обновляем информацию о последнем сообщении и времени
+            item.querySelector('.chat-last-message').textContent = `Последнее сообщение: ${chat.chat_last_message}`;
+            // Можно добавить визуальный эффект уведомления или выделения
+            item.classList.add('new-message');
+            setTimeout(() => item.classList.remove('new-message'), 3000);
+        }
+    });
+}
+
+
+*/
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -128,109 +255,28 @@ function LoadPageRegAuth() {
 
 
 /* Выход из чата */
-
-function LoadPageChat() {
-    _get({ url: '/modules/chat.html' }, function(responseText) {
+/*
+ function LoadPageChat() {
+   _get({ url: '/modules/chat.html' }, function(responseText) {
         CONTENT.innerHTML = responseText;
 
        
-        document.querySelector('.logout').addEventListener('click', function() {
+       document.querySelector('.logout').addEventListener('click', function() {
             
-            TOKEN = ''; 
-            LoadPageReg(`.registration.html`); 
-        });
-         clearMessage();
-    });
+           TOKEN = ''; 
+             LoadPageReg(`.registration.html`); 
+         });
+          clearMessage();
+     });
 
-    //очистка сообщения
-    function clearMessage() {
-    document.getElementById('entrance.html').textContent = '';
-}
-}
-
-
+     //очистка сообщения
+     function clearMessage() {
+     document.getElementById('btn-auth.html').textContent = '';
+ }
+ }
 
 
-
-
-
-
-
-
-
-// 1. В функции LoadPageChat() добавим кнопку для открытия профиля
-function LoadPageChat() {
-    _get({ url: '/modules/chat.html' }, function(responseText) {
-        CONTENT.innerHTML = responseText;
-
-        // Добавим кнопку "Профиль" в чат
-        const chatContainer = CONTENT;
-        const profileBtn = document.createElement('button');
-        profileBtn.textContent = 'Мой профиль';
-        profileBtn.className = 'btn-profile'; // класс для стилизации
-        chatContainer.appendChild(profileBtn);
-
-        // Обработчик для кнопки "Мой профиль"
-        profileBtn.addEventListener('click', showUserCard);
-
-        // Обработчик выхода
-        document.querySelector('.logout').addEventListener('click', function() {
-            TOKEN = ''; 
-            LoadPageReg(); 
-        });
-        
-        // Очистка сообщений
-        clearMessage();
-    });
-
-    function clearMessage() {
-        document.getElementById('entrance.html').textContent = '';
-    }
-}
-
-// 2. Функция для отображения карточки пользователя
-function showUserCard() {
-    _get({ url: '/modules/card.html' }, function(responseText) {
-        CONTENT.innerHTML = responseText;
-
-        // Предположим, что у вас есть текущий userId (например, из токена или глобальной переменной)
-        const userId = '123'; // Замените на актуальный ID
-
-        // Загрузим текущие данные пользователя
-        _get({ url: `${HOST}/user/${userId}` }, function(userResponse) {
-            const userData = JSON.parse(userResponse);
-            document.querySelector('input[name="fam"]').value = userData.fam;
-            document.querySelector('input[name="name"]').value = userData.name;
-            document.querySelector('input[name="otch"]').value = userData.otch;
-            document.querySelector('input[name="email"]').value = userData.email;
-            // добавьте другие поля по необходимости
-        });
-
-        // Обработчик "Сохранить"
-        document.querySelector('.save-profile').addEventListener('click', function() {
-            const formData = new FormData(document.getElementById('userForm'));
-            formData.append('token', TOKEN);
-            let xhr = new XMLHttpRequest();
-            xhr.open('POST', `${HOST}/user/${userId}`);
-            xhr.send(formData);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        alert('Профиль обновлен');
-                        showUserCard(); // перезагрузить карточку с новыми данными
-                    } else {
-                        alert('Ошибка при сохранении профиля');
-                    }
-                }
-            };
-        });
-
-        // Обработчик "Закрыть"
-        document.querySelector('.close-card').addEventListener('click', function() {
-            LoadPageChat(); // возвращаемся к чату
-        });
-    });
-}
+*/ 
 
 
 
@@ -239,13 +285,6 @@ function showUserCard() {
 
 
 
-
-
-
-
-
-
-/*---------*/
 
 
 
