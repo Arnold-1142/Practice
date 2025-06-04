@@ -127,9 +127,78 @@ function onLoadPageChat(){
 
 
 
-    
+
+
+
+
+// Функция для получения списка чатов
+function LoadChats() {
+    _get({ url: `${HOST}/modules/chat.html/` }, function(responseText) {
+        try {
+            const chats = JSON.parse(responseText);
+            displayChatList(chats);
+        } catch (e) {
+            console.error('Ошибка списка чатов:', e);
+        }
+    });
 }
-    
+
+// Функция для отображения списка чатов ghbdtn
+function displayChatList(chat) {
+    const chatContainer = document.querySelector('.chats'); // предполагается, что есть контейнер для списков
+    if (!chatContainer) return;
+
+    chatContainer.innerHTML = ''; // очищаем текущий список
+
+    chats.forEach(chat => {
+        const chatItem = document.createElement('div');
+        chatItem.className = 'chat-item';
+
+        // Создаем структуру элемента
+        chatItem.innerHTML = `
+            <div class="chat-photo">
+                <img src="${chat.companion_photo_link || '/files/photos/default_men.png'}" alt="Фото" width="50" height="50"/>
+            </div>
+            <div class="chat-info">
+                <div class="chat-name">${chat.chat_name}</div>
+                <div class="last-message">Последнее сообщение: ${chat.chat_last_message}</div>
+                <div class="companion-name">${chat.companion_fam} ${chat.companion_name} ${chat.companion_otch}</div>
+            </div>
+        `;
+        // Можно добавить обработчик клика по чату
+        chatItem.addEventListener('click', () => {
+            // Тут можно открыть выбранный чат
+            console.log('Открыть чат:', chat.chat_id);
+            // например, вызвать функцию для загрузки сообщений этого чата
+        });
+        chatContainer.appendChild(chatItem);
+    });
+}
+
+
+
+// Вызовем загрузку списков чатов после входа в чат или авторизации
+// Например, после успешной авторизации:
+function LoadPageChat(userdata) {   
+    _get({ url: '/modules/chat.html' }, function(responseText) {
+        CONTENT.innerHTML = responseText;
+        onLoadPageChat();
+
+        // После загрузки страницы чата, получим список чатов
+        LoadChats();
+
+        // Можно установить периодический вызов для обновления списка
+        setInterval(LoadChats, 30000); // обновлять каждые 30 секунд 
+    });
+}
+
+
+
+
+
+}
+
+
 //#endregion
 
 
@@ -137,9 +206,7 @@ function onLoadPageChat(){
 
 
 
-
 /* 
-
 
 // Функция для получения списка чатов пользователя
 function fetchChats() {
