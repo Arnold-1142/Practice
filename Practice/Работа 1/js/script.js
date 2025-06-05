@@ -6,6 +6,7 @@ const CONTENT = document.querySelector('.content');
 function _get(params, callback) {
     var HTTP_REQUEST = new XMLHttpRequest();
     HTTP_REQUEST.open('GET', `${params.url}`);
+    HTTP_REQUEST.setRequestHeader('Authorization', 'Bearer ' + TOKEN);
     HTTP_REQUEST.send();
     HTTP_REQUEST.onreadystatechange = function() {
         if(HTTP_REQUEST.readyState == 4) {
@@ -17,6 +18,7 @@ function _get(params, callback) {
 function _post (params, callback) {
     let HTTP_REQUEST = new XMLHttpRequest();
     HTTP_REQUEST.open('POST', `${params.url}`);
+    HTTP_REQUEST.setRequestHeader('Authorization', 'Bearer ' + TOKEN);
     HTTP_REQUEST.send(params.data);
     HTTP_REQUEST.onreadystatechange = function() {
         if(HTTP_REQUEST.readyState == 4) {
@@ -116,10 +118,36 @@ function LoadPageChat (userdata) {
 }
 
 
+
+/* Выход из чата */
 function onLoadPageChat(){
     document.querySelector('.user').addEventListener('click', function() {
         document.querySelector('.user-block').classList.toggle('hidden')
-    })
+    });
+
+      const logoutBtn = document.querySelector('.user-block-footer .logout');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+            
+            TOKEN = '';
+            
+            LoadPageAuth();
+        });
+    }
+
+document.querySelector('.user-block-footer .logout').addEventListener('click', function() {
+    TOKEN = ''; 
+    LoadPageAuth(); 
+});
+
+
+
+
+
+
+
+
+}
 
 
 
@@ -130,6 +158,121 @@ function onLoadPageChat(){
 
 
 
+
+
+
+/*
+// Функция для получения списка чатов пользователя
+async function fetchChats() {
+  const url = `${HOST}/chats/`; // URL для получения списка чатов
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        // Добавьте авторизационный токен, если требуется
+        // 'Authorization': `Bearer ${TOKEN}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Ошибка при получении чатов: ${response.status}`);
+    }
+
+    const chats = await response.json();
+
+    // Обработка полученных данных
+    console.log('Полученные чаты:', chats);
+
+    // Например, отображение списков в интерфейсе
+    const chatsContainer = document.querySelector('.table');
+    if (chatsContainer) {
+      chatsContainer.innerHTML = ''; // Очистить текущий список
+      chats.forEach(chat => {
+        const chatDiv = document.createElement('div');
+        chatDiv.className = 'table-1';
+
+        // Создаем изображение аватара
+        const img = document.createElement('img');
+        img.src = chat.companion_photo_link || '/img/default-avatar.png'; // путь по умолчанию, если нет фото
+        img.alt = 'Аватар';
+
+        // Создаем название чата
+        const p = document.createElement('p');
+        p.textContent = chat.chat_name;
+
+        chatDiv.appendChild(img);
+        chatDiv.appendChild(p);
+
+        // Можно добавить обработчик клика по чату для открытия переписки
+        chatDiv.addEventListener('click', () => {
+          openChat(chat.chat_id, chat.chat_name);
+        });
+
+        chatsContainer.appendChild(chatDiv);
+      });
+    }
+
+    // Запуск отслеживания новых сообщений (например, через polling)
+    startPollingForNewMessages();
+
+  } catch (error) {
+    console.error('Ошибка при получении списков чатов:', error);
+  }
+}
+
+// Функция для открытия конкретного чата (пример)
+function openChat(chatId, chatName) {
+  console.log(`Открытие чата ${chatId}: ${chatName}`);
+  // Реализуйте логику открытия выбранного чата
+}
+
+// Функция для периодической проверки новых сообщений (пример)
+function startPollingForNewMessages() {
+  setInterval(() => {
+    checkForNewMessages();
+  }, 10000); // каждые 10 секунд
+}
+
+// Функция для проверки новых сообщений (пример)
+async function checkForNewMessages() {
+  // Реализуйте запрос к API для получения новых сообщений или обновления статуса
+  console.log('Проверка новых сообщений...');
+  // Можно обновлять статус last_message или отображать новые сообщения в интерфейсе
+}
+
+// Вызов функции при загрузке страницы или по необходимости
+fetchChats();
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
 
 // Функция для получения списка чатов
 function LoadChats() {
@@ -192,14 +335,35 @@ function LoadPageChat(userdata) {
     });
 }
 
+*/
 
 
 
 
-}
 
 
 //#endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -304,94 +468,4 @@ function updateChatItem(chat) {
 
 
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Выход из чата */
-/*
- function LoadPageChat() {
-   _get({ url: '/modules/chat.html' }, function(responseText) {
-        CONTENT.innerHTML = responseText;
-
-       
-       document.querySelector('.logout').addEventListener('click', function() {
-            
-           TOKEN = ''; 
-             LoadPageReg(`.registration.html`); 
-         });
-          clearMessage();
-     });
-
-     //очистка сообщения
-     function clearMessage() {
-     document.getElementById('btn-auth.html').textContent = '';
- }
- }
-
-
-*/ 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
