@@ -134,21 +134,98 @@ function onLoadPageChat(){
             LoadPageAuth();
         });
     }
+}
 
 document.querySelector('.user-block-footer .logout').addEventListener('click', function() {
     TOKEN = ''; 
     LoadPageAuth(); 
 });
 
-
-
-
-
-
-
-
+/*function loadChats() {
+    _get({ url: `${HOST}/chats/` }, function(responseText) {
+        const response = JSON.parse(responseText);
+        // Предположим, что ответ — массив объектов чатов
+        console.log('Список чатов:', response);
+        // Можно вывести их на страницу или обработать дальше
+        displayChats(response);
+    });
 }
 
+function displayChats(chats) {
+    const container = document.querySelector('.table'); // или другой контейнер
+    container.innerHTML = ''; // очистить перед добавлением
+    chats.forEach(chat => {
+        // Предположим, у каждого чата есть свойство name или participants
+        const div = document.createElement('div');
+        div.className = 'table-1';
+        div.innerHTML = `
+            <img src="/img/Аватарка.avif" alt="">
+            <p>${chat.name || 'Чат'}</p>
+        `;
+        container.appendChild(div);
+    });
+    LoadPageChat(userData); // уже есть у вас
+loadChats(); // вызов для получения списка чатов
+} */
+
+
+
+
+ _get(`${HOST}/chats`, function(respons){
+        respons = JSON.parse(respons)
+        console.log(respons)
+        respons.forEach(element => {
+            let chat = document.createElement('div')
+            chat.classList.add('table')
+            chat.setAttribute('id', element.chat_id)
+            chat.addEventListener('click', function(){
+                 _get(`${HOST}/user`, function(response){
+                    response = JSON.parse(response)
+                    user_id = response.id;
+                    console.log(user_id)
+                })
+                _get(`${HOST}/messages/?chat_id=${element.chat_id}`, function(respons){
+                    respons = JSON.parse(respons)
+                    respons.forEach(element => {
+                        console.log(respons)
+                        if (user_id == element["sender"]["id"]){
+                            console.log(1)
+                        }else{
+                            
+                        }
+                    })
+                    
+                })
+            })
+
+            let name_chat = document.createElement('p')
+            name_chat.textContent = element.chat_name
+            chat.append(name_chat)
+            document.querySelector('.table').append(chat)
+        });
+    })
+
+
+
+/*function showMessages(chat_id){
+    _get(`${HOST}/user`, function(response){
+        response = JSON.parse(response)
+        user_id = response.id;
+        console.log(user_id)
+    })
+    _get(`${HOST}/messages/?chat_id=${chat_id}`, function(respons){
+        respons = JSON.parse(respons)
+        respons.forEach(element => {
+            console.log(respons)
+            if (user_id == element["sender"]["id"]){
+                console.log(1)
+            }else{
+
+            }
+        })
+        
+    })
+}*/
 
 
 
@@ -161,9 +238,12 @@ document.querySelector('.user-block-footer .logout').addEventListener('click', f
 
 
 
-/*
+
+
+
+
 // Функция для получения списка чатов пользователя
-async function fetchChats() {
+/*async function fetchChats() {
   const url = `${HOST}/chats/`; // URL для получения списка чатов
 
   try {
@@ -243,10 +323,10 @@ async function checkForNewMessages() {
 }
 
 // Вызов функции при загрузке страницы или по необходимости
-fetchChats();
+fetchChats();*/
 
 
-*/
+
 
 
 
