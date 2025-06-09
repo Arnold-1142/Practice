@@ -322,6 +322,24 @@ input .text {
     cursor: pointer;
 }
   
+/*создать чат */
+
+.new-chat-btn {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #25D366;
+     &:hover{
+        background-color: #03a811;
+    }
+    border: none;
+    border-radius: 6px;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+
+  
 
 /* КАРТОЧКА */
 
@@ -359,9 +377,7 @@ input .text {
     margin-top: 20px;
     display: block;
     
-
-
-}
+}    
 
 
 
@@ -442,9 +458,8 @@ input .text {
     width: 30%;
     height: 40px;
     border-radius: 10px;
-    margin-left: 700px;
-   
-    
+    margin-left: 450px;
+    display: flex;
     
                     
 }
@@ -458,7 +473,7 @@ input .text {
     width: 30%;
     height: 40px;
     border-radius: 10px;
-    margin-left: 60px;
+    margin-left: 180px;
    
 }  
 
@@ -467,6 +482,8 @@ input .text {
     
 }
 
-/*.message-text1{
+/*
+.message-text1{
     margin: 0;
-}*/
+}
+*/

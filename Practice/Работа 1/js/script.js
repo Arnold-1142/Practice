@@ -204,8 +204,11 @@ loadChats(); // вызов для получения списка чатов
             document.querySelector('.table').append(chat)
         });
     })
+ 
 
 
+ 
+  
 
 /*function showMessages(chat_id){
     _get(`${HOST}/user`, function(response){
@@ -272,7 +275,7 @@ loadChats(); // вызов для получения списка чатов
       chats.forEach(chat => {
         const chatDiv = document.createElement('div');
         chatDiv.className = 'table-1';
-
+            
         // Создаем изображение аватара
         const img = document.createElement('img');
         img.src = chat.companion_photo_link || '/img/default-avatar.png'; // путь по умолчанию, если нет фото
