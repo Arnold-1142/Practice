@@ -171,7 +171,7 @@ loadChats(); // вызов для получения списка чатов
 
 
 
- _get(`${HOST}/chats`, function(respons){
+_get(`${HOST}/chats`, function(respons){
         respons = JSON.parse(respons)
         console.log(respons)
         respons.forEach(element => {
@@ -203,7 +203,7 @@ loadChats(); // вызов для получения списка чатов
             chat.append(name_chat)
             document.querySelector('.table').append(chat)
         });
-    })
+    }) 
  
 
 
