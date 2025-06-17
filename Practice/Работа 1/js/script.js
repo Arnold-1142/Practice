@@ -79,7 +79,6 @@ function LoadPageAuth() {
     })
 }
 
-
 function OnLoadPageAuth(){
     document.querySelector('.btn-auth').addEventListener('click', function() {
         let gdata = new FormData();
@@ -116,7 +115,6 @@ function LoadPageChat (userdata) {
         onLoadPageChat()
     })
 }
-
 
 
 /* Выход из чата */
@@ -204,10 +202,16 @@ _get(`${HOST}/chats`, function(respons){
             document.querySelector('.table').append(chat)
         });
     }) 
- 
 
 
- 
+
+
+
+
+
+
+
+
   
 
 /*function showMessages(chat_id){

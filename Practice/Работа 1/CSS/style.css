@@ -175,14 +175,14 @@ body{
     overflow-y: auto;
 }
 
-#messages {
+/* #messages { 
     flex-grow: 1;
     padding: 15px;
     overflow-y: auto;
     background: linear-gradient(45deg, #3bcf0e 0%, #14c4c4 100%);
-  }
+  }  */
 
-.message {
+.message { 
     margin-bottom: 12px;
     max-width: 70%;
     padding: 8px 12px;
@@ -211,7 +211,10 @@ body{
 #input-area {
     display: flex;
     padding: 10px 15px;
-    background: #004040;
+    background: #289e46;
+    margin: 240px;
+    margin-top: 580px;
+    width: 63%;
   }
   #message-input {
     flex-grow: 1;
@@ -226,7 +229,7 @@ body{
     padding: 10px 20px;
     background: #08d42a;
     border: none;
-    color: white;
+    color: rgb(15, 14, 14);
     font-weight: 600;
     border-radius: 6px;
     cursor: pointer;
@@ -280,6 +283,7 @@ body{
 
 .chats{
     padding: 2px;
+    background-color: #0c500385;
 }
 
 .chat-img-1{
@@ -455,7 +459,7 @@ input .text {
 
 
 .far-1 img{
-       height: 150px;
+    height: 150px;
     width: 150px;
     border-radius: 40px;
     margin: 0 auto;
@@ -514,13 +518,9 @@ input .text {
 
 
 
-
 /* logout */
 
-
-
 /* СМС */
-
 
 
 .chat-container {
@@ -545,8 +545,7 @@ input .text {
     border-radius: 10px;
     margin-left: 450px;
     display: flex;
-    
-                    
+
 }
 
 /*.message-text {
@@ -559,13 +558,14 @@ input .text {
     height: 40px;
     border-radius: 10px;
     margin-left: 180px;
-   
+
 }  
 
 .message-bubble1 p {
     place-items: center;
     
 }
+
 
 /*
 .message-text1{
